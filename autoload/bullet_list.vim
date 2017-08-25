@@ -1,3 +1,14 @@
+fu! s:get_comment_patterns() abort "{{{1
+    let cms = !empty(&cms)
+           \?     split(&cms, '%s')[0]
+           \:     ''
+
+    " pattern describing 0 or 1 comment string followed by whitespace
+    " pattern describing      1 comment string "
+    return [ '\V\%('.escape(cms, '\').'\)\?\v\s*',
+           \ '\V\%('.escape(cms, '\').'\)\v\s*' ]
+endfu
+
 fu! bullet_list#ordered(type) abort "{{{1
     if count([ 'v', 'V', "\<c-v>" ], a:type)
         let [ lnum1, lnum2 ] = [ line("'<"), line("'>") ]
@@ -5,11 +16,10 @@ fu! bullet_list#ordered(type) abort "{{{1
         let [ lnum1, lnum2 ] = [ line("'["), line("']") ]
     endif
 
-    let cms = !empty(&cms)
-           \?     split(&cms, '%s')[0]
-           \:     ''
-
-    let cmt = '\V\%('.escape(cms, '\').'\)\?\v\s*'
+    let [ cmt, cmtt ] = s:get_comment_patterns()
+    "     │    │
+    "     │    └─ pattern describing 1 comment string + sequence of whitespace
+    "     └─ pattern describing 0 or 1 comment string + sequence of whitespace
 
     " If the lines are already prefixed by unordered list markers,
     " we want to change them with digits.
@@ -31,12 +41,14 @@ fu! bullet_list#ordered(type) abort "{{{1
 
     " Otherwise, the lines are unprefixed, so we want to prefix them with digits.
     else
-        let pat = '\v^\s*'.cmt.'\zs\ze\S?'
+        "                                           ┌ ignore an empty commented line
+        "                             ┌─────────────┤
+        let pat = '\v^\s*'.cmt.'\zs\ze%('.cmtt.')@!\S'
         let rep = '\=c.". "'
     endif
 
     let update_index = 'let c = line(".") == line("'']") + 1 ? c+1 : 1'
-    let cmd          = 'keepj keepp %s,%s g/%s/'.update_index.'|keepj keepp s/%s/%s'
+    let cmd          = 'keepj keepp %s,%s g/%s/'.update_index.'|keepj keepp s/%s/%s/e'
 
     let c = 0
     sil exe printf(cmd, lnum1, lnum2, pat, pat, rep)
@@ -49,15 +61,11 @@ fu! bullet_list#unordered(type) abort "{{{1
         let [ lnum1, lnum2 ] = [ line("'["), line("']") ]
     endif
 
-    let cms = !empty(&cms)
-           \?     split(&cms, '%s')[0]
-           \:     ''
-
-    let cmt = '\V\%('.escape(cms, '\').'\)\?\v\s*'
+    let [ cmt, cmtt ] = s:get_comment_patterns()
 
     " If the lines are prefixed with digits, we want to replace them with marks (`•`).
-    if getline(lnum1) =~# '\v^\s*'.cmt.'\d\s*\.'
-        let pat = '\v^\s*'.cmt.'\zs\d\s*\.\s?'
+    if getline(lnum1) =~# '\v^\s*'.cmt.'\d+\s*\.'
+        let pat = '\v^\s*'.cmt.'\zs\d+\s*\.\s?'
         let rep = '• '
 
     " If the lines are prefixed with marks (`-`, `*`, `•`), we want to remove them.
@@ -67,11 +75,14 @@ fu! bullet_list#unordered(type) abort "{{{1
 
     " Otherwise, the lines are unprefixed, so we want to prefix them with marks (`•`).
     else
-        let pat = '\v^\s*'.cmt.'\zs\ze\S?'
+        "                                           ┌ ignore an empty commented line
+        "                             ┌─────────────┤
+        let pat = '\v^\s*'.cmt.'\zs\ze%('.cmtt.')@!\S'
         let rep = '• '
     endif
 
-    let cmd = 'keepj keepp %s,%s s/%s/%s'
+    let cmd = 'keepj keepp %s,%s s/%s/%s/e'
+    let g:cmd = printf(cmd, lnum1, lnum2, pat, rep)
 
     sil exe printf(cmd, lnum1, lnum2, pat, rep)
 endfu
