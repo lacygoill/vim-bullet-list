@@ -1,6 +1,4 @@
 fu! bullet_list#ordered(type) abort "{{{1
-    let c = 0
-
     if count([ 'v', 'V', "\<c-v>" ], a:type)
         let [ lnum1, lnum2 ] = [ line("'<"), line("'>") ]
     else
@@ -40,6 +38,7 @@ fu! bullet_list#ordered(type) abort "{{{1
     let update_index = 'let c = line(".") == line("'']") + 1 ? c+1 : 1'
     let cmd          = 'keepj keepp %s,%s g/%s/'.update_index.'|keepj keepp s/%s/%s'
 
+    let c = 0
     sil exe printf(cmd, lnum1, lnum2, pat, pat, rep)
 endfu
 
@@ -76,4 +75,3 @@ fu! bullet_list#unordered(type) abort "{{{1
 
     sil exe printf(cmd, lnum1, lnum2, pat, rep)
 endfu
-
