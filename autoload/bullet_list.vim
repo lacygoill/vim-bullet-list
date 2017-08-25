@@ -82,7 +82,6 @@ fu! bullet_list#unordered(type) abort "{{{1
     endif
 
     let cmd = 'keepj keepp %s,%s s/%s/%s/e'
-    let g:cmd = printf(cmd, lnum1, lnum2, pat, rep)
 
     sil exe printf(cmd, lnum1, lnum2, pat, rep)
 endfu
