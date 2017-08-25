@@ -31,7 +31,7 @@ fu! bullet_list#ordered(type) abort "{{{1
 
     " Otherwise, the lines are unprefixed, so we want to prefix them with digits.
     else
-        let pat = '\v^\s*'.cmt.'\zs\ze\S'
+        let pat = '\v^\s*'.cmt.'\zs\ze\S?'
         let rep = '\=c.". "'
     endif
 
@@ -67,7 +67,7 @@ fu! bullet_list#unordered(type) abort "{{{1
 
     " Otherwise, the lines are unprefixed, so we want to prefix them with marks (`•`).
     else
-        let pat = '\v^\s*'.cmt.'\zs\ze\S'
+        let pat = '\v^\s*'.cmt.'\zs\ze\S?'
         let rep = '• '
     endif
 
