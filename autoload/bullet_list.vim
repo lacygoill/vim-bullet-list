@@ -1,3 +1,10 @@
+" guard {{{1
+
+if exists('g:auto_loaded_bullet_list')
+    finish
+endif
+let g:auto_loaded_bullet_list = 1
+
 fu! s:get_comment_patterns() abort "{{{1
     let cms = !empty(&cms)
            \?     split(&cms, '%s')[0]
