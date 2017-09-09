@@ -77,7 +77,7 @@ fu! bullet_list#unordered(type) abort "{{{1
 
     " If the lines are prefixed with marks (`-`, `*`, `•`), we want to remove them.
     elseif getline(lnum1) =~# '\v^\s*'.cmt.'[-*•]'
-        let pat = '\v^\s*'.cmt.'\zs\S\s*'
+        let pat = '\v^\s*'.cmt.'\zs[-*•]\s*'
         let rep = ''
 
     " Otherwise, the lines are unprefixed, so we want to prefix them with marks (`•`).
