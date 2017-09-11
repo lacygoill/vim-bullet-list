@@ -6,8 +6,8 @@ endif
 let g:auto_loaded_bullet_list = 1
 
 fu! s:get_comment_patterns() abort "{{{1
-    let cms = !empty(&cms)
-           \?     split(&cms, '%s')[0]
+    let cms = !empty(&l:cms)
+           \?     split(&l:cms, '%s')[0]
            \:     ''
 
     " pattern describing 0 or 1 comment string followed by whitespace
