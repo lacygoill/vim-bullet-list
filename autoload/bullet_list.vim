@@ -17,7 +17,7 @@ fu! s:get_comment_patterns() abort "{{{1
 endfu
 
 fu! bullet_list#ordered(type) abort "{{{1
-    if count([ 'v', 'V', "\<c-v>" ], a:type)
+    if index([ 'v', 'V', "\<c-v>" ], a:type) != -1
         let [ lnum1, lnum2 ] = [ line("'<"), line("'>") ]
     else
         let [ lnum1, lnum2 ] = [ line("'["), line("']") ]
@@ -62,7 +62,7 @@ fu! bullet_list#ordered(type) abort "{{{1
 endfu
 
 fu! bullet_list#unordered(type) abort "{{{1
-    if count([ 'v', 'V', "\<c-v>" ], a:type)
+    if index([ 'v', 'V', "\<c-v>" ], a:type) != -1
         let [ lnum1, lnum2 ] = [ line("'<"), line("'>") ]
     else
         let [ lnum1, lnum2 ] = [ line("'["), line("']") ]
