@@ -7,8 +7,8 @@ let g:auto_loaded_bullet_list = 1
 
 fu! s:get_comment_patterns() abort "{{{1
     let cms = !empty(&l:cms)
-           \?     split(&l:cms, '%s')[0]
-           \:     ''
+    \?            split(&l:cms, '%s')[0]
+    \:            ''
 
     " pattern describing 0 or 1 comment string followed by whitespace
     " pattern describing      1 comment string "
@@ -70,14 +70,16 @@ fu! bullet_list#unordered(type) abort "{{{1
 
     let [ cmt, cmtt ] = s:get_comment_patterns()
 
-    " If the lines are prefixed with digits, we want to replace them with marks (`•`).
-    if getline(lnum1) =~# '\v^\s*'.cmt.'\d+\s*\.'
-        let pat = '\v^\s*'.cmt.'\zs\d+\s*\.\s?'
+    " If the lines are prefixed with digits, we want to replace them with marks,
+    " or  ugly marks  (`*`, `-`),  we  want to  replace them  with proper  marks
+    " (`•`).
+    if getline(lnum1) =~# '\v^\s*'.cmt.'%(\d+\s*\.|[*-])'
+        let pat = '\v^\s*'.cmt.'\zs%(\d+\s*\.\s?|[*-]\s*)'
         let rep = '• '
 
-    " If the lines are prefixed with marks (`-`, `*`, `•`), we want to remove them.
-    elseif getline(lnum1) =~# '\v^\s*'.cmt.'[-*•]'
-        let pat = '\v^\s*'.cmt.'\zs[-*•]\s*'
+    " if the lines are already prefixed with marks, remove them
+    elseif getline(lnum1) =~# '\v^\s*'.cmt.'•'
+        let pat = '\v^\s*'.cmt.'\zs•\s*'
         let rep = ''
 
     " Otherwise, the lines are unprefixed, so we want to prefix them with marks (`•`).
