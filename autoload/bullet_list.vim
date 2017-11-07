@@ -6,9 +6,10 @@ endif
 let g:auto_loaded_bullet_list = 1
 
 fu! s:get_comment_patterns() abort "{{{1
-    let cms = !empty(&l:cms)
-    \?            split(&l:cms, '%s')[0]
-    \:            ''
+    if empty(&l:cms)
+        return [ '', '' ]
+    endif
+    let cms = split(&l:cms, '%s')[0]
 
     " pattern describing 0 or 1 comment string followed by whitespace
     " pattern describing      1 comment string "
@@ -48,9 +49,9 @@ fu! bullet_list#ordered(type) abort "{{{1
 
     " Otherwise, the lines are unprefixed, so we want to prefix them with digits.
     else
-        "                                           ┌ ignore an empty commented line
-        "                             ┌─────────────┤
-        let pat = '\v^\s*'.cmt.'\zs\ze%('.cmtt.')@!\S'
+        "                                                              ┌ ignore an empty commented line
+        "                                              ┌───────────────┤
+        let pat = '\v^\s*'.cmt.'\zs\ze'.(!empty(cmt) ? '%('.cmtt.')@!\S' : '')
         let rep = '\=c.". "'
     endif
 
@@ -84,9 +85,9 @@ fu! bullet_list#unordered(type) abort "{{{1
 
     " Otherwise, the lines are unprefixed, so we want to prefix them with marks (`•`).
     else
-        "                                           ┌ ignore an empty commented line
-        "                             ┌─────────────┤
-        let pat = '\v^\s*'.cmt.'\zs\ze%('.cmtt.')@!\S'
+        "                                                              ┌ ignore an empty commented line
+        "                                              ┌───────────────┤
+        let pat = '\v^\s*'.cmt.'\zs\ze'.(!empty(cmt) ? '%('.cmtt.')@!\S' : '')
         let rep = '• '
     endif
 
