@@ -6,15 +6,15 @@ endif
 let g:auto_loaded_bullet_list = 1
 
 fu! s:get_comment_patterns() abort "{{{1
-    if empty(&l:cms)
+    let cml = get(split(&l:cms, '%s'), 0, '')
+    if empty(cml)
         return [ '', '' ]
     endif
-    let cms = split(&l:cms, '%s')[0]
 
     " pattern describing 0 or 1 comment string followed by whitespace
     " pattern describing      1 comment string "
-    return [ '\V\%('.escape(cms, '/\').'\)\?\v\s*',
-           \ '\V\%('.escape(cms, '/\').'\)\v\s*' ]
+    return [ '\V\%('.escape(cml, '/\').'\)\?\v\s*',
+           \ '\V\%('.escape(cml, '/\').'\)\v\s*' ]
 endfu
 
 fu! bullet_list#ordered(type) abort "{{{1
