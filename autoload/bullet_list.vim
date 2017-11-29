@@ -1,5 +1,3 @@
-" guard {{{1
-
 if exists('g:auto_loaded_bullet_list')
     finish
 endif
