@@ -1,8 +1,3 @@
-if exists('g:autoloaded_bullet_list')
-    finish
-endif
-let g:autoloaded_bullet_list = 1
-
 fu! s:get_comment_patterns() abort "{{{1
     let cml = get(split(&l:cms, '%s'), 0, '')
     if empty(cml)
