@@ -56,7 +56,7 @@ fu! bullet_list#ordered(type) abort "{{{1
         sil exe printf(cmd, lnum1, lnum2, pat, pat, rep)
 
     catch
-        return my_lib#catch_error()
+        return lg#catch_error()
     endtry
 endfu
 
@@ -95,6 +95,6 @@ fu! bullet_list#unordered(type) abort "{{{1
         sil exe printf(cmd, lnum1, lnum2, pat, rep)
 
     catch
-        return my_lib#catch_error()
+        return lg#catch_error()
     endtry
 endfu
