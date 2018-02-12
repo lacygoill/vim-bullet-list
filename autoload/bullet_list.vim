@@ -12,7 +12,7 @@ endfu
 
 fu! bullet_list#ordered(type) abort "{{{1
     try
-        if a:type ==# 'vis'
+        if a:type is# 'vis'
             let [ lnum1, lnum2 ] = [ line("'<"), line("'>") ]
         else
             let [ lnum1, lnum2 ] = [ line("'["), line("']") ]
@@ -62,7 +62,7 @@ endfu
 
 fu! bullet_list#unordered(type) abort "{{{1
     try
-        if a:type ==# 'vis'
+        if a:type is# 'vis'
             let [ lnum1, lnum2 ] = [ line("'<"), line("'>") ]
         else
             let [ lnum1, lnum2 ] = [ line("'["), line("']") ]
