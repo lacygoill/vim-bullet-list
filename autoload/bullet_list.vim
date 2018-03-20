@@ -49,7 +49,7 @@ fu! bullet_list#ordered(type) abort "{{{1
             let rep = '\=c.". "'
         endif
 
-        let update_index = 'let c = line(".") == line("'']") + 1 ? c+1 : 1'
+        let update_index = 'let c = line(".") ==# line("'']") + 1 ? c+1 : 1'
         let cmd          = 'keepj keepp %s,%s g/%s/'.update_index.'|keepj keepp s/%s/%s/e'
 
         let c = 0
