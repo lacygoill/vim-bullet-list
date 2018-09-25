@@ -1,27 +1,27 @@
 fu! s:get_comment_patterns() abort "{{{1
     let cml = get(split(&l:cms, '%s'), 0, '')
     if empty(cml)
-        return [ '', '' ]
+        return ['', '']
     endif
 
     " pattern describing 0 or 1 comment string followed by whitespace
     " pattern describing      1 comment string "
-    return [ '\V\%('.escape(cml, '/\').'\)\?\v\s*',
-           \ '\V\%('.escape(cml, '/\').'\)\v\s*' ]
+    return ['\V\%('.escape(cml, '/\').'\)\?\v\s*',
+          \ '\V\%('.escape(cml, '/\').'\)\v\s*']
 endfu
 
 fu! bullet_list#ordered(type) abort "{{{1
     try
         if a:type is# 'vis'
-            let [ lnum1, lnum2 ] = [ line("'<"), line("'>") ]
+            let [lnum1, lnum2] = [line("'<"), line("'>")]
         else
-            let [ lnum1, lnum2 ] = [ line("'["), line("']") ]
+            let [lnum1, lnum2] = [line("'["), line("']")]
         endif
 
-        let [ cmt, cmtt ] = s:get_comment_patterns()
-        "     │    │
-        "     │    └─ pattern describing 1 comment string + sequence of whitespace
-        "     └─ pattern describing 0 or 1 comment string + sequence of whitespace
+        let [cmt, cmtt] = s:get_comment_patterns()
+        "    │    │
+        "    │    └ pattern describing 1 comment string + sequence of whitespace
+        "    └ pattern describing 0 or 1 comment string + sequence of whitespace
 
         " If the lines are already prefixed by unordered list markers,
         " we want to change them with digits.
@@ -63,12 +63,12 @@ endfu
 fu! bullet_list#unordered(type) abort "{{{1
     try
         if a:type is# 'vis'
-            let [ lnum1, lnum2 ] = [ line("'<"), line("'>") ]
+            let [lnum1, lnum2] = [line("'<"), line("'>")]
         else
-            let [ lnum1, lnum2 ] = [ line("'["), line("']") ]
+            let [lnum1, lnum2] = [line("'["), line("']")]
         endif
 
-        let [ cmt, cmtt ] = s:get_comment_patterns()
+        let [cmt, cmtt] = s:get_comment_patterns()
 
         " If the lines are prefixed with digits, we want to replace them with marks,
         " or  ugly marks  (`*`, `-`),  we  want to  replace them  with proper  marks
