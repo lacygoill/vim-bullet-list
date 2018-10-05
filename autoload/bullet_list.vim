@@ -6,8 +6,8 @@ fu! s:get_comment_patterns() abort "{{{1
 
     " pattern describing 0 or 1 comment string followed by whitespace
     " pattern describing      1 comment string "
-    return ['\V\%('.escape(cml, '/\').'\)\?\v\s*',
-          \ '\V\%('.escape(cml, '/\').'\)\v\s*']
+    return ['\V\%('.escape(cml, '\').'\)\=\v\s*',
+          \ '\V'.escape(cml, '\').'\v\s*']
 endfu
 
 fu! bullet_list#ordered(type) abort "{{{1
