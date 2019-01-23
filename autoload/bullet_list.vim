@@ -19,19 +19,19 @@ fu! bullet_list#ordered(type) abort "{{{1
         endif
 
         let [cmt, cmtt] = s:get_comment_patterns()
-        "    │    │
-        "    │    └ pattern describing 1 comment string + sequence of whitespace
-        "    └ pattern describing 0 or 1 comment string + sequence of whitespace
+        "     │    │
+        "     │    └ pattern describing 1 comment string + sequence of whitespace
+        "     └ pattern describing 0 or 1 comment string + sequence of whitespace
 
         " If the lines are already prefixed by unordered list markers,
         " we want to change them with digits.
-        if getline(lnum1) =~# '\v^\s*'.cmt.'[-*•]'
+        if getline(lnum1) =~# '\v^\s*'.cmt.'[-*+]'
 
             " Why the `\s*` at the end of the pattern?
             " Because otherwise, when we switch from a bullet list to a digit
             " list, a space is added between the marker and the text.
 
-            let pat = '\v^\s*'.cmt.'\zs[-*•]\s*'
+            let pat = '\v^\s*'.cmt.'\zs[-*+]\s*'
             let rep = '\=c.". "'
 
         " If the lines are already prefixed with digits, we want to remove them.
@@ -70,24 +70,22 @@ fu! bullet_list#unordered(type) abort "{{{1
 
         let [cmt, cmtt] = s:get_comment_patterns()
 
-        " If the lines are prefixed with digits, we want to replace them with marks,
-        " or  ugly marks  (`*`, `-`),  we  want to  replace them  with proper  marks
-        " (`•`).
-        if getline(lnum1) =~# '\v^\s*'.cmt.'%(\d+\s*\.|[*-])'
-            let pat = '\v^\s*'.cmt.'\zs%(\d+\s*\.\s?|[*-]\s*)'
-            let rep = '• '
+        " if the lines are prefixed with digits, we want to replace them with markers
+        if getline(lnum1) =~# '\v^\s*'.cmt.'\d+\.'
+            let pat = '\v^\s*'.cmt.'\zs%(\d+\.\s+)'
+            let rep = '- '
 
-        " if the lines are already prefixed with marks, remove them
-        elseif getline(lnum1) =~# '\v^\s*'.cmt.'•'
-            let pat = '\v^\s*'.cmt.'\zs•\s*'
+        " if the lines are already prefixed with markers, remove them
+        elseif getline(lnum1) =~# '\v^\s*'.cmt.'[-*+]'
+            let pat = '\v^\s*'.cmt.'\zs[-*+]\s*'
             let rep = ''
 
-        " Otherwise, the lines are unprefixed, so we want to prefix them with marks (`•`).
+        " otherwise, the lines are unprefixed, so we want to prefix them with markers
         else
             "                                                              ┌ ignore an empty commented line
             "                                              ┌───────────────┤
             let pat = '\v^\s*'.cmt.'\zs\ze'.(!empty(cmt) ? '%('.cmtt.')@!\S' : '')
-            let rep = '• '
+            let rep = '- '
         endif
 
         let cmd = 'keepj keepp %s,%s s/%s/%s/e'
