@@ -43,8 +43,8 @@ fu! bullet_list#ordered(type) abort "{{{1
 
         " Otherwise, the lines are unprefixed, so we want to prefix them with digits.
         else
-            "                                                              ┌ ignore an empty commented line
-            "                                              ┌───────────────┤
+            "                                              ┌ ignore an empty commented line
+            "                                              ├───────────────┐
             let pat = '\v^\s*'.cmt.'\zs\ze'.(!empty(cmt) ? '%('.cmtt.')@!\S' : '')
             let rep = '\=c.". "'
         endif
@@ -82,8 +82,8 @@ fu! bullet_list#unordered(type) abort "{{{1
 
         " otherwise, the lines are unprefixed, so we want to prefix them with markers
         else
-            "                                                              ┌ ignore an empty commented line
-            "                                              ┌───────────────┤
+            "                                              ┌ ignore an empty commented line
+            "                                              ├───────────────┐
             let pat = '\v^\s*'.cmt.'\zs\ze'.(!empty(cmt) ? '%('.cmtt.')@!\S' : '')
             let rep = '- '
         endif
