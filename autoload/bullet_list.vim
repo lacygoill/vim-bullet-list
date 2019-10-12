@@ -1,4 +1,4 @@
-fu! s:get_comment_patterns() abort "{{{1
+fu s:get_comment_patterns() abort "{{{1
     let cml = get(split(&l:cms, '%s'), 0, '')
     if empty(cml)
         return ['', '']
@@ -10,7 +10,7 @@ fu! s:get_comment_patterns() abort "{{{1
           \ '\V'.escape(cml, '\').'\v\s*']
 endfu
 
-fu! bullet_list#ordered(type) abort "{{{1
+fu bullet_list#ordered(type) abort "{{{1
     try
         if a:type is# 'vis'
             let [lnum1, lnum2] = [line("'<"), line("'>")]
@@ -60,7 +60,7 @@ fu! bullet_list#ordered(type) abort "{{{1
     endtry
 endfu
 
-fu! bullet_list#unordered(type) abort "{{{1
+fu bullet_list#unordered(type) abort "{{{1
     try
         if a:type is# 'vis'
             let [lnum1, lnum2] = [line("'<"), line("'>")]
