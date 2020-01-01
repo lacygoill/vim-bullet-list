@@ -1,8 +1,6 @@
 fu s:get_comment_patterns() abort "{{{1
-    let cml = get(split(&l:cms, '%s'), 0, '')
-    if empty(cml)
-        return ['', '']
-    endif
+    let cml = matchstr(&l:cms, '\S*\ze\s*%s')
+    if empty(cml) | return ['', ''] | endif
 
     " pattern describing 0 or 1 comment string followed by whitespace
     " pattern describing      1 comment string "
