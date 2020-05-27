@@ -3,10 +3,10 @@ if exists('g:loaded_bullet_list')
 endif
 let g:loaded_bullet_list = 1
 
-nno <silent><unique> m*  :<c-u>set opfunc=bullet_list#unordered<cr>g@
-nno <silent><unique> m** :<c-u>set opfunc=bullet_list#unordered<bar>exe 'norm! '..v:count1..'g@_'<cr>
-xno <silent><unique> m*  :<c-u>call bullet_list#unordered('vis')<cr>
+nno <expr><unique> m* bullet_list#unordered()
+nno <expr><unique> m** bullet_list#unordered()..'_'
+xno <expr><unique> m* bullet_list#unordered()
 
-nno <silent><unique> m#  :<c-u>set opfunc=bullet_list#ordered<cr>g@
-nno <silent><unique> m## :<c-u>set opfunc=bullet_list#ordered<bar>exe 'norm! '..v:count1..'g@_'<cr>
-xno <silent><unique> m#  :<c-u>call bullet_list#ordered('vis')<cr>
+nno <expr><unique> m# bullet_list#ordered()
+nno <expr><unique> m## bullet_list#ordered()..'_'
+xno <expr><unique> m# bullet_list#ordered()
