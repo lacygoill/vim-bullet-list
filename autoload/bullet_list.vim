@@ -1,6 +1,10 @@
-import Catch from 'lg.vim'
+import {Catch, IsVim9} from 'lg.vim'
 
 fu s:get_comment_patterns() abort "{{{1
+    if s:IsVim9()
+        return ['#\=\s*', '#\s*']
+    endif
+
     let cml = matchstr(&l:cms, '\S*\ze\s*%s')
     if empty(cml) | return ['', ''] | endif
 
