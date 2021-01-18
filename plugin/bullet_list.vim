@@ -1,7 +1,7 @@
-if exists('g:loaded_bullet_list')
-    finish
-endif
-let g:loaded_bullet_list = 1
+vim9 noclear
+
+if exists('loaded') | finish | endif
+var loaded = true
 
 nno <expr><unique> m* bullet_list#unordered()
 nno <expr><unique> m** bullet_list#unordered() .. '_'
