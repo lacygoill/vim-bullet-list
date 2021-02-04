@@ -78,12 +78,12 @@ def bullet_list#unordered(type = ''): string #{{{2
     var pat: string
     var rep: string
     # if the lines are prefixed with digits, we want to replace them with markers
-    if getline(lnum1) =~# '^\s*' .. cmt .. '\d\+\.'
+    if getline(lnum1) =~ '^\s*' .. cmt .. '\d\+\.'
         pat = '^\s*' .. cmt .. '\zs\%(\d\+\.\s\+\)'
         rep = '- '
 
         # if the lines are already prefixed with markers, remove them
-    elseif getline(lnum1) =~# '^\s*' .. cmt .. '[-*+]'
+    elseif getline(lnum1) =~ '^\s*' .. cmt .. '[-*+]'
         pat = '^\s*' .. cmt .. '\zs[-*+]\s*'
         rep = ''
 
