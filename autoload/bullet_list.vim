@@ -3,7 +3,10 @@ vim9script noclear
 if exists('loaded') | finish | endif
 var loaded = true
 
-import {Catch, IsVim9} from 'lg.vim'
+import {
+    Catch,
+    IsVim9,
+    } from 'lg.vim'
 
 # Interface {{{1
 def bullet_list#ordered(type = ''): string #{{{2
