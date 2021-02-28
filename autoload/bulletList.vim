@@ -9,9 +9,9 @@ import {
     } from 'lg.vim'
 
 # Interface {{{1
-def bullet_list#ordered(type = ''): string #{{{2
+def bulletList#ordered(type = ''): string #{{{2
     if type == ''
-        &opfunc = 'bullet_list#ordered'
+        &opfunc = 'bulletList#ordered'
         return 'g@'
     endif
     var lnum1: number = line("'[")
@@ -66,9 +66,9 @@ enddef
 
 var counter: number
 
-def bullet_list#unordered(type = ''): string #{{{2
+def bulletList#unordered(type = ''): string #{{{2
     if type == ''
-        &opfunc = 'bullet_list#unordered'
+        &opfunc = 'bulletList#unordered'
         return 'g@'
     endif
     var lnum1: number = line("'[")
