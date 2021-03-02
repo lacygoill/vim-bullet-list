@@ -123,8 +123,8 @@ def GetCommentPatterns(): list<string> #{{{2
     # pattern describing 0 or 1 comment string followed by whitespace
     # pattern describing      1 comment string "
     return [
-        '\V\%(' .. escape(cml, '\') .. '\)\=\m\s*',
-        '\V' .. escape(cml, '\') .. '\m\s*'
+        '\V' .. '\%(' .. escape(cml, '\') .. '\)\=' .. '\m' .. '\s*',
+        '\V' .. escape(cml, '\') .. '\m' .. '\s*'
         ]
 enddef
 
