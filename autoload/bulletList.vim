@@ -6,7 +6,7 @@ var loaded = true
 import {
     Catch,
     IsVim9,
-    } from 'lg.vim'
+} from 'lg.vim'
 
 # Interface {{{1
 def bulletList#ordered(type = ''): string #{{{2
@@ -125,6 +125,6 @@ def GetCommentPatterns(): list<string> #{{{2
     return [
         '\V' .. '\%(' .. escape(cml, '\') .. '\)\=' .. '\m' .. '\s*',
         '\V' .. escape(cml, '\') .. '\m' .. '\s*'
-        ]
+    ]
 enddef
 
