@@ -52,11 +52,11 @@ def bulletList#ordered(type = ''): string #{{{2
     endif
 
     var update_index: string = 'counter = line(".") == line("'']") + 1 ? counter + 1 : 1'
-    var cmd: string = 'keepj keepp :%s,%s g/%s/' .. update_index .. ' | keepj keepp s/%s/%s/e'
+    var cmd: string = 'sil keepj keepp :%s,%s g/%s/' .. update_index .. ' | keepj keepp s/%s/%s/e'
 
     counter = 0
     try
-        sil exe printf(cmd, lnum1, lnum2, pat, pat, rep)
+        exe printf(cmd, lnum1, lnum2, pat, pat, rep)
     catch
         Catch()
         return ''
@@ -98,10 +98,10 @@ def bulletList#unordered(type = ''): string #{{{2
         rep = '- '
     endif
 
-    var cmd: string = 'keepj keepp :%s,%s s/%s/%s/e'
+    var cmd: string = 'sil keepj keepp :%s,%s s/%s/%s/e'
 
     try
-        sil exe printf(cmd, lnum1, lnum2, pat, rep)
+        exe printf(cmd, lnum1, lnum2, pat, rep)
     catch
         Catch()
         return ''
@@ -115,7 +115,7 @@ def GetCommentPatterns(): list<string> #{{{2
         return ['#\=\s*', '#\s*']
     endif
 
-    var cml: string = matchstr(&l:cms, '\S*\ze\s*%s')
+    var cml: string = &cms->matchstr('\S*\ze\s*%s')
     if empty(cml)
         return ['', '']
     endif
