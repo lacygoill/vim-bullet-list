@@ -11,7 +11,7 @@ import {
 # Interface {{{1
 def bulletList#ordered(type = ''): string #{{{2
     if type == ''
-        &opfunc = 'bulletList#ordered'
+        &operatorfunc = 'bulletList#ordered'
         return 'g@'
     endif
     var lnum1: number = line("'[")
@@ -68,7 +68,7 @@ var counter: number
 
 def bulletList#unordered(type = ''): string #{{{2
     if type == ''
-        &opfunc = 'bulletList#unordered'
+        &operatorfunc = 'bulletList#unordered'
         return 'g@'
     endif
     var lnum1: number = line("'[")
@@ -115,7 +115,7 @@ def GetCommentPatterns(): list<string> #{{{2
         return ['#\=\s*', '#\s*']
     endif
 
-    var cml: string = &cms->matchstr('\S*\ze\s*%s')
+    var cml: string = &commentstring->matchstr('\S*\ze\s*%s')
     if empty(cml)
         return ['', '']
     endif
