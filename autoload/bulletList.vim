@@ -52,11 +52,13 @@ def bulletList#ordered(type = ''): string #{{{2
     endif
 
     var update_index: string = 'counter = line(".") == line("'']") + 1 ? counter + 1 : 1'
-    var cmd: string = 'sil keepj keepp :%s,%s g/%s/' .. update_index .. ' | keepj keepp s/%s/%s/e'
+    var cmd: string = 'silent keepjumps keeppatterns'
+        .. ' :%s,%s global/%s/' .. update_index
+        .. ' | keepjumps keeppatterns substitute/%s/%s/e'
 
     counter = 0
     try
-        exe printf(cmd, lnum1, lnum2, pat, pat, rep)
+        execute printf(cmd, lnum1, lnum2, pat, pat, rep)
     catch
         Catch()
         return ''
@@ -98,10 +100,10 @@ def bulletList#unordered(type = ''): string #{{{2
         rep = '- '
     endif
 
-    var cmd: string = 'sil keepj keepp :%s,%s s/%s/%s/e'
+    var cmd: string = 'silent keepjumps keeppatterns :%s,%s substitute/%s/%s/e'
 
     try
-        exe printf(cmd, lnum1, lnum2, pat, rep)
+        execute printf(cmd, lnum1, lnum2, pat, rep)
     catch
         Catch()
         return ''
