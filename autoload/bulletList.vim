@@ -1,12 +1,6 @@
 vim9script noclear
 
-if exists('loaded') | finish | endif
-var loaded = true
-
-import {
-    Catch,
-    IsVim9,
-} from 'lg.vim'
+import Catch from 'lg.vim'
 
 # Interface {{{1
 def bulletList#ordered(type = ''): string #{{{2
@@ -113,10 +107,6 @@ enddef
 #}}}1
 # Core {{{1
 def GetCommentPatterns(): list<string> #{{{2
-    if IsVim9()
-        return ['#\=\s*', '#\s*']
-    endif
-
     var cml: string = &commentstring->matchstr('\S*\ze\s*%s')
     if empty(cml)
         return ['', '']
